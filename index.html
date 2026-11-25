@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoanWise AI | Full Loan Applicant Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav class="nav"><a class="brand" href="#"><span class="brand-icon">L</span> LoanWise<span class="brand-ai">AI</span></a>
+<div class="nav-links"><a href="#how">How it works</a><a href="#about">About</a><a class="nav-cta" href="#checker">Start application ↗</a></div></nav>
+<header class="hero">
+ <div class="hero-copy"><div class="eyebrow"><span></span> SMARTER LENDING DECISIONS</div>
+ <h1>Your loan profile,<br><em>clearly understood.</em></h1>
+ <p>Complete a detailed applicant profile and receive an academic machine-learning estimate with transparent explanations.</p>
+ <a class="primary-btn" href="#checker">Start application <b>→</b></a>
+ <div class="trust"><span>✦</span> Random Forest prediction + Explainable AI demonstration</div></div>
+ <div class="hero-art"><div class="orb"></div><div class="float-card card-top"><span class="mini-icon">✧</span><div><b>Full profile</b><small>Applicant information</small></div></div>
+ <div class="visual-card"><div class="visual-head"><span>Eligibility overview</span><span class="live-dot">● MODEL READY</span></div>
+ <div class="visual-score"><div class="score-ring"><span>AI</span></div><div><b>Detailed</b><small>Applicant assessment</small></div></div>
+ <div class="visual-line"><span></span></div><div class="visual-foot"><span>Random Forest</span><span>SHAP insights</span></div></div>
+ <div class="float-card card-bottom"><span class="check-icon">✓</span><div><b>Clear explanations</b><small>Understand model factors</small></div></div></div>
+</header>
+<main>
+<section class="stats"><div><b>{{ accuracy }}</b><span>Sample test accuracy</span></div><div><b>250</b><span>Decision trees</span></div><div><b>SHAP</b><span>Explainable AI</span></div><div><b>8</b><span>Model input features</span></div></section>
+<section class="checker section" id="checker">
+ <div class="section-intro"><div class="eyebrow">FULL APPLICATION</div><h2>Tell us about your<br><em>financial profile.</em></h2>
+ <p>Complete the sections below. Fields marked optional can be skipped for this demonstration.</p>
+ <div class="privacy-note"><b>Privacy notice</b><br>Do not enter real Aadhaar or PAN numbers. Identity fields are for a classroom UI demonstration only. They are not sent to the prediction API or stored.</div>
+ <div class="privacy-note"><b>Model limitation</b><br>Your included training CSV contains 8 model features. Past-loan and detailed credit fields are collected for demonstration/context only and do not affect the current model prediction.</div>
+ </div>
+ <div class="form-panel">
+ <div class="form-heading"><div><span class="step">01 / APPLICANT DETAILS</span><h3>Loan application form</h3></div><span class="secure">⌑ Demo only</span></div>
+ <form id="loanForm">
+  <fieldset><legend>1. Personal information</legend><div class="field-grid">
+   <label>Full name<input type="text" name="FullName" maxlength="100" placeholder="Applicant full name"></label>
+   <label>Mobile number<input type="tel" name="Phone" inputmode="numeric" pattern="[0-9+() -]{7,20}" placeholder="Mobile number"></label>
+   <label>Email address<input type="email" name="Email" placeholder="name@example.com"></label>
+   <label>Date of birth<input type="date" name="DateOfBirth"></label>
+   <label class="full">Residential address<textarea name="Address" rows="2" maxlength="300" placeholder="City, state and postal address"></textarea></label>
+   <label>Aadhaar number (demo only)<input type="text" name="AadhaarDemo" inputmode="numeric" maxlength="12" pattern="[0-9]{12}" placeholder="Use dummy digits only"></label>
+   <label>PAN number (demo only)<input type="text" name="PANDemo" maxlength="10" pattern="[A-Za-z]{5}[0-9]{4}[A-Za-z]" placeholder="Use a dummy PAN only"></label>
+  </div></fieldset>
+
+  <fieldset><legend>2. Employment and income</legend><div class="field-grid">
+   <label>Employment type<select name="EmploymentType"><option value="">Select employment type</option><option>Salaried</option><option>Self-employed</option><option>Business owner</option><option>Other</option></select></label>
+   <label>Employer / business name<input type="text" name="Employer" maxlength="100" placeholder="Employer or business"></label>
+   <label>Monthly applicant income (₹)<input type="number" name="ApplicantIncome" min="0" step="1" value="50000" required></label>
+   <label>Monthly co-applicant income (₹)<input type="number" name="CoapplicantIncome" min="0" step="1" value="15000" required></label>
+   <label>Other monthly income (₹)<input type="number" name="OtherIncome" min="0" step="1" value="0"></label>
+   <label>Work experience (years)<input type="number" name="WorkExperience" min="0" max="70" step="1" placeholder="e.g. 4"></label>
+   <label>Education<select name="Education" required><option>Graduate</option><option>Not Graduate</option></select></label>
+   <label>Self-employed?<select name="Self_Employed" required><option>No</option><option>Yes</option></select></label>
+  </div></fieldset>
+
+  <fieldset><legend>3. Active loans and obligations</legend><div class="field-grid">
+   <label>Do you have active loans?<select name="HasActiveLoans"><option>No</option><option>Yes</option></select></label>
+   <label>Number of active loans<input type="number" name="ActiveLoanCount" min="0" max="50" value="0"></label>
+   <label>Active loan types<select name="ActiveLoanTypes"><option>None</option><option>Home loan</option><option>Personal loan</option><option>Vehicle loan</option><option>Education loan</option><option>Multiple types</option><option>Other</option></select></label>
+   <label>Total outstanding balance (₹)<input type="number" name="OutstandingBalance" min="0" step="1" value="0"></label>
+   <label>Total monthly EMI (₹)<input type="number" name="MonthlyEMI" min="0" step="1" value="0"></label>
+   <label>Remaining loan tenure (months)<input type="number" name="RemainingTenure" min="0" step="1" placeholder="e.g. 48"></label>
+  </div></fieldset>
+
+  <fieldset><legend>4. Past loan and repayment history</legend><div class="field-grid">
+   <label>Have you taken a loan before?<select name="PreviousLoan"><option>No</option><option>Yes</option></select></label>
+   <label>Number of completed loans<input type="number" name="CompletedLoans" min="0" max="100" value="0"></label>
+   <label>Previous loan type<select name="PreviousLoanType"><option>Not applicable</option><option>Home loan</option><option>Personal loan</option><option>Vehicle loan</option><option>Education loan</option><option>Business loan</option><option>Other</option></select></label>
+   <label>Previous loan amount (₹)<input type="number" name="PreviousLoanAmount" min="0" step="1" value="0"></label>
+   <label>Previous repayment status<select name="RepaymentStatus"><option>No previous loan</option><option>Paid on time</option><option>Occasional delays</option><option>Overdue</option><option>Settled / restructured</option></select></label>
+   <label>Missed EMI payments<input type="number" name="MissedEMIs" min="0" max="1000" value="0"></label>
+   <label>Delayed payments<input type="number" name="DelayedPayments" min="0" max="1000" value="0"></label>
+   <label>Any loan default?<select name="LoanDefault"><option>No</option><option>Yes</option><option>Prefer not to say</option></select></label>
+   <label>Previous loan closure status<select name="ClosureStatus"><option>Not applicable</option><option>Fully closed</option><option>Partially paid / active</option><option>Settled</option></select></label>
+  </div></fieldset>
+
+  <fieldset><legend>5. Credit profile</legend><div class="field-grid">
+   <label>Credit score (optional)<input type="number" name="CreditScore" min="300" max="900" placeholder="300–900"></label>
+   <label>Credit history<select name="Credit_History" required><option value="1">Good / no recorded default</option><option value="0">Limited or adverse history</option></select></label>
+   <label>Credit history available?<select name="CreditHistoryAvailable"><option>Yes</option><option>No</option><option>Not sure</option></select></label>
+   <label>Credit card usage<select name="CreditCardUsage"><option>No credit card</option><option>Low usage</option><option>Moderate usage</option><option>High usage</option></select></label>
+   <label>Credit card outstanding (₹)<input type="number" name="CardOutstanding" min="0" step="1" value="0"></label>
+   <label>Payment history<select name="CreditPaymentHistory"><option>Mostly on time</option><option>Some late payments</option><option>Frequent late payments</option><option>No credit history</option></select></label>
+   <label>Credit enquiries in last 6 months<input type="number" name="CreditEnquiries" min="0" max="100" value="0"></label>
+  </div></fieldset>
+
+  <fieldset><legend>6. Requested loan details</legend><div class="field-grid">
+   <label>Requested loan amount (₹)<input type="number" name="LoanAmount" min="1" step="1" value="200000" required></label>
+   <label>Loan term (months)<select name="Loan_Amount_Term" required><option>120</option><option>180</option><option>240</option><option>300</option><option selected>360</option></select></label>
+   <label>Loan purpose<select name="LoanPurpose"><option>Home purchase</option><option>Personal</option><option>Vehicle</option><option>Education</option><option>Business</option><option>Other</option></select></label>
+   <label>Property area<select name="Property_Area" required><option>Urban</option><option>Semiurban</option><option>Rural</option></select></label>
+   <label>Property ownership<select name="PropertyOwnership"><option>Owned</option><option>Rented</option><option>Family-owned</option><option>Not applicable</option></select></label>
+  </div></fieldset>
+  <button class="submit-btn" id="submitBtn" type="submit">Analyze my eligibility <span>→</span></button>
+  <p class="form-note">Only the 8 model-supported fields are sent to the prediction endpoint. Other form fields remain in your browser and are not saved by this demo.</p>
+ </form>
+ <div id="result" class="result hidden" aria-live="polite"></div>
+ </div>
+</section>
+<section class="how section" id="how"><div class="section-intro centered"><div class="eyebrow">HOW IT WORKS</div><h2>Intelligence with<br><em>transparency.</em></h2></div>
+<div class="steps"><article><span>01</span><div class="step-icon">▤</div><h3>Prepare the data</h3><p>Missing values are handled, categories encoded and numerical features scaled.</p></article>
+<article><span>02</span><div class="step-icon">⌘</div><h3>Predict with ML</h3><p>A Random Forest model combines decision trees using the supported training features.</p></article>
+<article><span>03</span><div class="step-icon">✧</div><h3>Explain with SHAP</h3><p>Feature contributions show which model inputs influenced the individual estimate.</p></article></div></section>
+<section class="about section" id="about"><div><div class="eyebrow">BUILT FOR CLARITY</div><h2>Not just a result.<br><em>A reason behind it.</em></h2></div><p>LoanWise AI is an academic decision-support prototype demonstrating machine learning and Explainable AI. The included synthetic dataset currently trains the model on applicant income, co-applicant income, loan amount, loan term, credit history, education, self-employment and property area. Additional history fields are displayed for the application demonstration but are not model inputs yet.</p></section>
+</main>
+<footer><a class="brand" href="#"><span class="brand-icon">L</span> LoanWise<span class="brand-ai">AI</span></a><span>Academic project · Machine Learning + Explainable AI</span><span>© 2026 LoanWise AI</span></footer>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>
