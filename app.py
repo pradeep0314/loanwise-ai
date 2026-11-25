@@ -12,10 +12,7 @@ from sklearn.metrics import accuracy_score
 
 app = Flask(__name__)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_PATH = os.path.join(BASE_DIR, "data", "loan_sample.csv")
-
-if not os.path.exists(DATA_PATH):
-    DATA_PATH = os.path.join(BASE_DIR, "loan_sample.csv")
+DATA_PATH = os.path.join(BASE_DIR, "loan_sample.csv")
 
 def train_model():
     df = pd.read_csv(DATA_PATH)
